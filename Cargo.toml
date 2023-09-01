@@ -1,78 +1,25 @@
-[workspace]
-resolver = "2"
+[package]
+name = "axmem"
+version = "0.1.0"
+edition = "2021"
 
-members = [
-    "crates/allocator",
-    "crates/arm_gic",
-    "crates/arm_pl011",
-    "crates/dw_apb_uart",
-    "crates/axerrno",
-    "crates/axfs_devfs",
-    "crates/axfs_ramfs",
-    "crates/axfs_vfs",
-    "crates/axio",
-    "crates/capability",
-    "crates/crate_interface",
-    "crates/driver_block",
-    "crates/driver_common",
-    "crates/driver_display",
-    "crates/driver_net",
-    "crates/driver_pci",
-    "crates/driver_virtio",
-    "crates/flatten_objects",
-    "crates/handler_table",
-    "crates/kernel_guard",
-    "crates/lazy_init",
-    "crates/linked_list",
-    "crates/memory_addr",
-    "crates/page_table",
-    "crates/page_table_entry",
-    "crates/percpu",
-    "crates/percpu_macros",
-    "crates/ratio",
-    "crates/scheduler",
-    "crates/slab_allocator",
-    "crates/spinlock",
-    "crates/timer_list",
-    "crates/tuple_for_each",
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-    "modules/axalloc",
-    "modules/axconfig",
-    "modules/axdisplay",
-    "modules/axdriver",
-    "modules/axfs",
-    "modules/axhal",
-    "modules/axlog",
-    "modules/axnet",
-    "modules/axruntime",
-    "modules/axsync",
-    "modules/axtask",
+[features]
 
-    "api/axfeat",
-    "api/arceos_api",
+monolithic = ["axfs/monolithic"]
 
-    "ulib/axstd",
-    "ulib/axlibc",
+default = []
 
-    "apps/display",
-    "apps/exception",
-    "apps/helloworld",
-    "apps/memtest",
-    "apps/fs/shell",
-    "apps/net/echoserver",
-    "apps/net/httpclient",
-    "apps/net/httpserver",
-    "apps/net/udpserver",
-    "apps/net/bwbench",
-    "apps/task/parallel",
-    "apps/task/sleep",
-    "apps/task/yield",
-    "apps/task/priority",
-    "apps/task/tls",
-]
-
-[profile.release]
-lto = true
-
-[patch.crates-io]
-crate_interface = { path = "crates/crate_interface" }
+[dependencies]
+log = "0.4"
+axhal = { path = "../axhal", features = ["paging"] }
+axalloc = { path = "../axalloc" }
+axconfig = { path = "../axconfig" }
+axerrno = { path = "../../crates/axerrno" }
+axfs = { path = "../axfs" }
+axio = { path = "../../crates/axio" }
+spinlock = { path = "../../crates/spinlock" }
+xmas-elf = "0.9.0"
+riscv = "0.10"
+page_table_entry = { path = "../../crates/page_table_entry" }
